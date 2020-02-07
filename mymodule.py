@@ -11,6 +11,15 @@ def get_weather(city):
     weather = json.loads(result)
     return weather["main"]["temp"] -273.15
 
+def postal_lookup(postal_code):
+    sock = urlopen("http://api.postcodes.io/postcodes/" + postal_code)
+    result = sock.read()
+    sock.close()
+    details = json.loads(result)
+    return (details["result"]["latitude"], details["result"]["longitude"])
+
 if __name__ == "__main__":
     degree = get_weather("OSLO")
     print("Weather in Oslo is %.2f degree Celsius" % degrees)
+    location = postal_lookup("B323PP")
+    print(location)
